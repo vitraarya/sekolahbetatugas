@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="!tasks.isDone || ok"
     :class="[
       'item-task d-flex align-items-start border-bottom pt-3 pb-4',
       isGrid ? 'col-12 col-md-6 col-lg-4' : 'col-12',
@@ -20,6 +21,7 @@
       ]"
     >
       <div class="title-task mb-1">{{ tasks.title }}</div>
+      <div class="badge bg-primary">{{ tasks.category }}</div>
       <div class="description-task small text-muted">
         {{ tasks.description }}
       </div>
@@ -30,7 +32,12 @@
 export default {
   props: {
     tasks: Object,
-    isGrid: Boolean,
+    ok: false,
+    isGrid: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
 };
 </script>

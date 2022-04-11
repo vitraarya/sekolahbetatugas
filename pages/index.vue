@@ -30,6 +30,13 @@
                 {{ isGrid ? "Grid" : "List" }}
               </button>
             </div>
+            <div>&nbsp;</div>
+            <div>
+              <select v-model="category">
+                <option value="Kursi">Kursi</option>
+                <option value="Meja">Meja</option>
+              </select>
+            </div>
           </div>
         </div>
         <div class="list-task row">
@@ -38,6 +45,7 @@
             :key="i"
             :tasks="tasks"
             :isGrid="isGrid"
+            :ok="ok"
           />
         </div>
         <div class="action py-2">
@@ -74,6 +82,16 @@
             </div>
           </div>
         </div>
+        <div v-if="ok == true">
+          <button @click="ok = !ok" class="btn btn-outline-success">
+            Hide
+          </button>
+        </div>
+        <div v-if="ok == false">
+          <button @click="ok = !ok" class="btn btn-outline-success">
+            Show all hidden
+          </button>
+        </div>
       </div>
     </div>
     <Footer />
@@ -88,47 +106,56 @@ export default {
   },
   data() {
     return {
+      ok: true,
+      category: "",
       searchQuery: "",
+      isGrid: false,
+      isCreating: false,
       // Daftar task
       tasks: [
         {
           id: 1,
           title: "Task 1",
           description: "ini deskripsi 1",
+          category: "Kursi",
           isDone: false,
         },
         {
           id: 2,
           title: "Task 2",
           description: "ini deskripsi 2",
-          isDone: false,
-        },
-        {
-          id: 3,
-          title: "Task 3",
-          description: "ini deskripsi 3",
+          category: "Meja",
           isDone: false,
         },
       ],
-      
-      isGrid: false,
-      isCreating: false,
     };
   },
   computed: {
     resultQuery() {
-      if (this.searchQuery) {
+      if (this.category) {
         return this.tasks.filter((item) => {
-          return this.searchQuery
+          return this.category
             .toLowerCase()
             .split("")
-            .every((v) => item.title.toLowerCase().includes(v));
+            .every((v) => item.category.toLowerCase().includes(v));
         });
       } else {
+        return this.tasks;
+      }
+    },
+    Category() {
+      if (tasks.category == "Kursi") {
+        alert("Kategori Kursi");
+      }
+      if (tasks.category == "Meja") {
+        alert("Kategori Meja");
+      } else {
+        alert("Kabeh Di Pilih");
         return this.tasks;
       }
     },
   },
 };
 </script>
-<style></style>
+<style>
+</style>
